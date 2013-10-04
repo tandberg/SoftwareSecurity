@@ -28,7 +28,7 @@ public class CancelOrderAction implements Action {
 
         if (customer == null) {
             ActionResponse actionResponse = new ActionResponse(ActionResponseType.REDIRECT, "loginCustomer");
-            actionResponse.addParameter("from", "editOrder");
+            actionResponse.addParameter("from", "cancelOrder");
             return actionResponse;
         }
         System.out.println("D: " + request.getParameter("orderId"));
@@ -38,11 +38,27 @@ public class CancelOrderAction implements Action {
         
         if(order == null){
             ActionResponse actionResponse = new ActionResponse(ActionResponseType.REDIRECT, "loginCustomer");
-            actionResponse.addParameter("from", "editOrder");
+            actionResponse.addParameter("from", "cancelOrder");
             return actionResponse;
         }
+
         order.setStatus(-1);
         orderDao.updateStatusOrder(order.getStatus(), order.getId());
+        Cart cart = orderDao.getOrderCartItems(orderId);        
+        if(cart == null){
+            ActionResponse actionResponse = new ActionResponse(ActionResponseType.REDIRECT, "loginCustomer");
+            actionResponse.addParameter("from", "cancelOrder");
+            return actionResponse;
+        }
+        //Create new order;
+        float returnprice = Float.parseFloat(order.getValue()) *(-1);
+        Order newOrder = new Order(customer, order.getAddress(), returnprice + "");
+        newOrder.setCart(cart);
+        newOrder.setStatus(-1);
+        orderDao.add(newOrder);
+        
+        
+        //Need to show the new orders on the view customer site.
         List<Order> orders = orderDao.browse(customer);
         request.setAttribute("orders", orders);
         return new ActionResponse(ActionResponseType.FORWARD, "viewCustomer");

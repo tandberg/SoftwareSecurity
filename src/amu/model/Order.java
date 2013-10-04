@@ -76,6 +76,7 @@ public class Order {
                 return "Pending";
             case -1:
                 return "Canceled";
+           
         }
     }
     public void setCart(Cart cart){
@@ -83,6 +84,10 @@ public class Order {
     }
     public void setStatus(int status){
     	this.status = status;
+    }
+
+    public Address getAdress(){
+    	return this.address;
     }
     
     public Cart getCart(){
