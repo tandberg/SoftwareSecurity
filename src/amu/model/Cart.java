@@ -9,6 +9,7 @@ public class Cart implements Serializable {
     private Map<String, CartItem> items = new HashMap<String, CartItem>();
     private Address shippingAddress = null;
     private CreditCard creditCard = null;
+    private Order order = null;
 
     public Map<String, CartItem> getItems() {
         return items;
@@ -82,5 +83,11 @@ public class Cart implements Serializable {
 
     public void setCreditCard(CreditCard creditCard) {
         this.creditCard = creditCard;
+    }
+    public void setLastOrder(Order order){
+    	this.order = order;
+    }
+    public Order getLastOrder(){
+    	return this.order;
     }
 }

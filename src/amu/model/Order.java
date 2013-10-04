@@ -10,6 +10,7 @@ public class Order {
     private Calendar createdDate;
     private String value;
     private int status;
+    private Cart cart;
     
     // TODO: Add OrderItems
 
@@ -21,7 +22,15 @@ public class Order {
         this.value = value;
         this.status = status;
     }
-
+    public Order(int id, Customer customer, Address address, String subtotal) {
+        this.id = id;
+        this.customer = customer;
+        this.address = address;
+        this.createdDate = null;
+        this.value = subtotal;
+        this.status = 0;
+ 
+    }
     public Order(Customer customer, Address address, String subtotal) {
         this.id = null;
         this.customer = customer;
@@ -68,5 +77,15 @@ public class Order {
             case -1:
                 return "Canceled";
         }
+    }
+    public void setCart(Cart cart){
+    	this.cart = cart;
+    }
+    public void setStatus(int status){
+    	this.status = status;
+    }
+    
+    public Cart getCart(){
+    	return this.cart;
     }
 }

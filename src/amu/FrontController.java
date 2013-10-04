@@ -17,6 +17,8 @@ public class FrontController extends HttpServlet {
             throws ServletException, IOException {
         try {
             Action action = ActionFactory.getAction(request);
+            System.out.println(action + " HALLA");
+
             ActionResponse actionResponse = action.execute(request, response);
             
             if (actionResponse.getType() == ActionResponseType.REDIRECT) {
