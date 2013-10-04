@@ -1,3 +1,4 @@
+<%@page import="amu.model.Order"%>
 <div class="container">
     <h1>Customer options</h1>
     <div>Hello, ${customer.name}</div>
@@ -46,7 +47,24 @@
                 <div>Date: <fmt:formatDate value="${order.createdDate.time}" type="date" dateStyle="short" /></div>
                 <div>Value: ${order.value}</div>
                 <div>Status: ${order.statusText}</div>
-            </div>
+                <c:set value="2" var="can"/>
+                <c:set value="-1" var="ship"/>
+                
+                <c:choose>
+  					<c:when test="${order.status==can}">
+      				
+      				</c:when>
+  					<c:when test="${order.status==ship}">
+    					
+  					</c:when>
+  					<c:otherwise>
+                    	<span><a href="editOrder.do?orderId=${order.id}">Edit</a></span>
+                		<span><a href="cancelOrder.do?orderId=${order.id}">Cancel</a></span> 
+  					</c:otherwise>
+					</c:choose>
+           
+           </div>
+           <div class="divline"></div>
         </c:forEach>
     </div>
 </div>
