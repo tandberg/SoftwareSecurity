@@ -27,10 +27,11 @@ class LoginCustomerAction implements Action {
 
             CustomerDAO customerDAO = new CustomerDAO();
             Customer customer = customerDAO.findByEmail(request.getParameter("email"));
-
+            
             if (customer != null) {
                 values.put("email", request.getParameter("email"));
 
+                
                 if (customer.getActivationToken() == null) {
                     if (customer.getPassword().equals(CustomerDAO.hashPassword(request.getParameter("password")))) {
                         HttpSession session = request.getSession(true);
