@@ -150,5 +150,38 @@ public class CustomerDAO {
         }
         return customer;
     }
+    public Customer getCustomerByID(int customer_id){
+    	Customer customer = null;
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = Database.getConnection();
+            statement = connection.createStatement();
+
+            String query = "SELECT * FROM customer WHERE id='"
+                    + customer_id
+                    + "'";
+            resultSet = statement.executeQuery(query);
+            Logger.getLogger(this.getClass().getName()).log(Level.FINE, "findByID SQL Query: " + query);
+
+
+            if (resultSet.next()) {
+                customer = new Customer();
+                customer.setId(resultSet.getInt("id"));
+                customer.setEmail(resultSet.getString("email"));
+                customer.setPassword(resultSet.getString("password"));
+                customer.setName(resultSet.getString("name"));
+                customer.setActivationToken(resultSet.getString("activation_token"));
+            }
+        } catch (SQLException exception) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, exception);
+        } finally {
+            Database.close(connection, statement, resultSet);
+        }
+        return customer;
+    }
     
 }

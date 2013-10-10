@@ -93,6 +93,7 @@ public class OrderDAO {
 			statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, order.getCustomer().getId());
 			statement.setInt(2, order.getAddress().getId());
+		
 			statement.setBigDecimal(3, new BigDecimal(order.getValue()));
 			statement.setInt(4, order.getStatus());
 			statement.executeUpdate();

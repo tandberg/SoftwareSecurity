@@ -59,3 +59,73 @@ textarea{
     font-family: sans-serif;
     float:right;
 }
+.booklist{
+	list-style: none;
+}
+.addreview{
+	display: inline;
+}
+.addtocart{
+	display: inline;
+}
+
+.singleReview{
+	box-shadow: 10px 10px 5px #888888;
+    margin: 0 auto;
+	border: 2px solid #CCC;
+    border-radius: 3px;
+    width:80%;
+}
+.singleReviewLeft{
+	float:left;
+	text-align: left;
+	width: 10%;
+	
+}
+.singleReviewRight{
+	width: 80%;
+	text-align: left;
+	margin-left: 18%;
+	word-break:break-all;
+}
+.titleReview{
+	
+	color: #000000;
+    font: normal 20px Arial, Helvetica, sans;
+    }
+.reviewedDate{
+	color: #A9A9A9;
+    font: normal 12px Arial, Helvetica, sans;
+    border-bottom:solid 1px #000000;
+    
+}
+.reviewText{
+	font: normal 16px Arial, Helvetica, sans;
+	border-bottom:solid 1px #000000;
+}
+.likesDivReview{
+	font: normal 14px Arial, Helvetica, sans;	
+}
+.nameOfReviewer{
+	color: #000000;
+	margin-left:3px;
+    font: normal 16px Arial, Helvetica, sans;
+}
+.liked { 
+    background: url(/bookstore/img/thumbsup.png);
+	width: 32px;
+	height: 36px;
+
+}
+.disliked { 
+    background-image: url(/bookstore/img/thumbsdown.png);
+	width: 32px;
+	height: 36px;
+
+}
+.likedForm{
+	display: inline;
+}
+.dislikedForm{
+	display: inline;
+}

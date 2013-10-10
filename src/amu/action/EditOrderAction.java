@@ -26,7 +26,6 @@ public class EditOrderAction implements Action {
             actionResponse.addParameter("from", "editOrder");
             return actionResponse;
         }
-        System.out.println("D: " + request.getParameter("orderId"));
         int orderId = Integer.parseInt(request.getParameter("orderId"));
         OrderDAO orderDao = new OrderDAO();
         Order order = orderDao.getSingleOrderByID(orderId, customer);
