@@ -14,9 +14,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import amu.model.Book;
 import amu.model.Customer;
 import amu.model.Order;
+import amu.model.Publisher;
 import amu.model.Review;
+import amu.model.Title;
 
 public class ReviewDAO {
 	Connection connection = null;
@@ -109,7 +112,7 @@ public class ReviewDAO {
 			resultSet = statement.executeQuery();
 
 			if (resultSet.next()) {
-				int dislikes = resultSet.getInt("likes");
+				int dislikes = resultSet.getInt("dislikes");
 				dislikes = dislikes + 1;
 				String updateQuery = "UPDATE `review` SET dislikes=? WHERE id=?";
 				performUpdate(updateQuery, dislikes, review_id);
@@ -135,5 +138,52 @@ public class ReviewDAO {
 		finally{
 			Database.close(connection, statement, resultSet);
 		}
+	}
+	public boolean customerHasLikedOrDisliked(int customerid, int reviewid){
+        try {
+        	
+            connection = Database.getConnection();            
+            String query = "SELECT * FROM `review_vote_by_customer` WHERE `customer_id`= ? AND `review_id`= ?";
+        	System.out.println("R " + query);
+
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, customerid);
+            statement.setInt(2, reviewid);
+            resultSet = statement.executeQuery();
+            
+            if (resultSet.next()) {
+            	return true;
+                // TODO: Reviews, Categories
+            }
+        } catch (SQLException exception) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, exception);
+        } finally {
+            Database.close(connection, statement, resultSet);
+        }
+        
+        return false;
+		
+	}
+	public boolean addLikedToUser(int customerid, int reviewid){
+		try {
+			connection = Database.getConnection();
+			String query = "INSERT INTO `review_vote_by_customer` (customer_id, review_id) "
+					+ "VALUES (?, ?)";
+			statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setInt(1, customerid);
+			statement.setInt(2, reviewid);
+			statement.executeUpdate();
+
+			resultSet = statement.getGeneratedKeys();
+			if (resultSet.next()) {
+				return true;
+			}
+		} catch (SQLException exception) {
+			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, exception);
+		} finally {
+			Database.close(connection, statement, resultSet);
+		}
+
+		return false;
 	}
 }

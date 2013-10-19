@@ -24,13 +24,17 @@
                 </ul>
             </div>
             <div>
-                ${book.description}
+                <b>Description: </b>${book.description}
             </div>
             <div>
                 <form class="addtocart" action="addBookToCart.do" method="post">
                     <input type="hidden" name="isbn" value="${book.isbn13}" />
                     <input type="text" name="quantity" value="1" />
                     <input type="submit" value="Add to cart" />
+                </form>
+                <form class="addToWishList" action="viewUserBooklists.do" method="post">
+                    <input type="hidden" name="isbn" value="${book.isbn13}" />                
+                    <input type="submit" value="Add to wishlist" />
                 </form>
                 <form class="addreview" action="addReviewToBook.do" method="post">
                     <input type="hidden" name="isbn" value="${book.isbn13}" />                

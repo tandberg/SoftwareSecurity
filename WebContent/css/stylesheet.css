@@ -65,7 +65,8 @@ textarea{
 .addreview{
 	display: inline;
 }
-.addtocart{
+
+.addToWishList{
 	display: inline;
 }
 
@@ -127,5 +128,43 @@ textarea{
 	display: inline;
 }
 .dislikedForm{
+	display: inline;
+}
+.personalBooklist{
+	box-shadow: 10px 10px 5px #888888;
+    margin: 0 auto;
+	border: 2px solid #CCC;
+    border-radius: 3px;
+    width:80%;
+}
+.personalBooklistLeft{
+	float:left;
+	text-align: left;
+	width: 10%;
+	
+	
+}
+.personalBooklistRight{
+	width: 80%;
+	margin-top: 3px;
+	text-align: left;
+	margin-left: 18%;
+	
+}
+.clear{
+	clear: both;
+}
+.created{
+	color: #A9A9A9;
+    font: normal 12px Arial, Helvetica, sans;
+    
+}
+.addNewList{
+	border-bottom:solid 1px #000000;
+}
+.addBookToListForm{
+	display: inline;
+}
+.viewMoreForm{
 	display: inline;
 }
