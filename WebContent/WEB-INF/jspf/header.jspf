@@ -5,11 +5,37 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/stylesheet.css" />" />
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>" />
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" language="Javascript" 
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js">
+</script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Amu-Darya Bookstore</title>
     </head>
     <header>
+  	<div class="row">  
+		<div class="row-fluid menu" >  
+			<ul class="nav nav-pills"> 
+				<li><a href="/bookstore/index.jsp">Home</a></li>     
+				<li><a href="/bookstore/registerCustomer.do">Register</a></li>  
+				<li><a href="/bookstore/loginCustomer.do">Login</a></li>   
+				<li><a href="/bookstore/viewCustomer.do">View Profile</a></li>   
+				<li><a href="/bookstore/viewUserBooklists.do">Create booklist</a></li>
+				<li><a href="/bookstore/debug/list_books.jsp">List books</a></li>
+				<li><a href="/bookstore/customerSupport.do">Complaint</a></li>
+				<li><a href="/bookstore/viewAllBooklistsAction.do">All booklists</a></li>
+				<li><a href="/bookstore/debug/mail_log.jsp">View mail log</a></li>
+
+			</ul>  
+		</div>
+	</div>
+	<div class ="row undermenu">   
         <a href="<c:url value="/" />" > <img src="<c:url value = "/img/amudarya.png" />" /> </a>
         <span class="view-cart-link"><a href="<c:url value = "/viewCart.do" />">View cart</a></span>
+     </div> 
     </header>
     <body>
+    
+
+

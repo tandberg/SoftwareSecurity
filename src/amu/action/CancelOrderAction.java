@@ -12,6 +12,7 @@ import amu.database.OrderDAO;
 import amu.model.Address;
 import amu.model.Cart;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
 import amu.model.Order;
 
 public class CancelOrderAction implements Action {
@@ -31,14 +32,14 @@ public class CancelOrderAction implements Action {
             actionResponse.addParameter("from", "cancelOrder");
             return actionResponse;
         }
-        System.out.println("D: " + request.getParameter("orderId"));
         int orderId = Integer.parseInt(request.getParameter("orderId"));
         OrderDAO orderDao = new OrderDAO();
         Order order = orderDao.getSingleOrderByID(orderId, customer);
         
         if(order == null){
-            ActionResponse actionResponse = new ActionResponse(ActionResponseType.REDIRECT, "loginCustomer");
-            actionResponse.addParameter("from", "cancelOrder");
+            ActionResponse actionResponse = new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+            ErrorMessage error = new ErrorMessage("404 Not found", "Did not find any order");
+            request.setAttribute("errorMessage", error);
             return actionResponse;
         }
 
@@ -46,8 +47,10 @@ public class CancelOrderAction implements Action {
         orderDao.updateStatusOrder(order.getStatus(), order.getId());
         Cart cart = orderDao.getOrderCartItems(orderId);        
         if(cart == null){
-            ActionResponse actionResponse = new ActionResponse(ActionResponseType.REDIRECT, "loginCustomer");
-            actionResponse.addParameter("from", "cancelOrder");
+            ActionResponse actionResponse = new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+            ErrorMessage error = new ErrorMessage("404 Not found", "Did not find any cart");
+            
+            request.setAttribute("errorMessage", error);
             return actionResponse;
         }
         //Create new order;
