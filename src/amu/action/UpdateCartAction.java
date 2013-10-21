@@ -1,5 +1,7 @@
 package amu.action;
 
+import java.util.Arrays;
+
 import amu.database.BookDAO;
 import amu.model.Book;
 import amu.model.Cart;
@@ -23,7 +25,7 @@ class UpdateCartAction implements Action {
 
         String[] isbn = request.getParameterValues("isbn");
         String[] quantity = request.getParameterValues("quantity");
-
+        System.out.println(Arrays.toString(quantity));
         if (isbn != null && quantity != null && isbn.length == quantity.length) {
             
             for (int i = 0; i < isbn.length; i++) {
