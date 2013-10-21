@@ -203,4 +203,30 @@ public class OrderDAO {
 			Database.close(connection, statement, resultSet);
 		}
 	}
+	/**
+	 * Metode som passer på at man ikke kan endre på andres ordre.
+	 * */
+    public boolean checkOrderAccess(int customerid, int orderid){
+        try {
+            connection = Database.getConnection();
+
+            String query = "SELECT * FROM `order` WHERE id=? AND customer_id=? AND status=0";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, orderid);
+            statement.setInt(2, customerid);
+            	
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+            	return true;
+            } 
+        } catch (SQLException exception) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, exception);
+        } finally {
+            Database.close(connection, statement, resultSet);
+        }
+
+        return false;
+    }
 }

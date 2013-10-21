@@ -12,6 +12,7 @@ import amu.database.OrderDAO;
 import amu.model.Address;
 import amu.model.Cart;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
 import amu.model.Order;
 
 public class EditOrderAction implements Action {
@@ -30,10 +31,12 @@ public class EditOrderAction implements Action {
         OrderDAO orderDao = new OrderDAO();
         Order order = orderDao.getSingleOrderByID(orderId, customer);
         
-        if(order == null){
-            ActionResponse actionResponse = new ActionResponse(ActionResponseType.REDIRECT, "loginCustomer");
-            actionResponse.addParameter("from", "editOrder");
-            return actionResponse;
+        if(order == null || !orderDao.checkOrderAccess(customer.getId(), order.getId())){
+        	System.out.println(customer.getId());
+        	System.out.println(order.getId());
+        	ErrorMessage error = new ErrorMessage("403 Forbidden", "You are not authorized to access this order");
+        	request.setAttribute("errorMessage", error);
+        	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
         }
         
         Cart cart = orderDao.getOrderCartItems(orderId);        

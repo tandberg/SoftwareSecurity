@@ -4,6 +4,8 @@ import amu.database.BookDAO;
 import amu.model.Book;
 import amu.model.Cart;
 import amu.model.CartItem;
+import amu.model.ErrorMessage;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,8 +28,19 @@ class AddToCartAction implements Action {
         {
             BookDAO bookDAO = new BookDAO();
             Book book = bookDAO.findByISBN(request.getParameter("isbn"));
+            try {
+            	int quantity = Integer.parseInt(request.getParameter("quantity"));
+            	if(quantity>=0)
+            		cart.addItem(new CartItem(book, quantity));
+            	else{
+    	        	throw new Exception();
+            	}
+			}  catch (Exception e) {
+	        	ErrorMessage error = new ErrorMessage("Illegal Input!!", "Only positive integers allowed!");
+	        	request.setAttribute("errorMessage", error);
+	        	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+			}
             
-            cart.addItem(new CartItem(book, Integer.parseInt(request.getParameter("quantity"))));
         }
 
         return new ActionResponse(ActionResponseType.REDIRECT, "viewCart");
