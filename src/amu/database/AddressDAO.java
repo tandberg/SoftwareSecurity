@@ -129,4 +129,32 @@ public class AddressDAO {
 
         return false;
     }
+    /**
+     * Checks if the user is allowed to edit/delete adress.
+     * 
+     * @return true if the customer is allowed to access the adress
+     */
+    public boolean checkAdressAccess(int customerid, int adressid){
+        try {
+            connection = Database.getConnection();
+
+            String query = "SELECT address FROM address WHERE id=? AND customer_id=?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, adressid);
+            statement.setInt(2, customerid);
+            
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+            	return true;
+            } 
+        } catch (SQLException exception) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, exception);
+        } finally {
+            Database.close(connection, statement, resultSet);
+        }
+
+        return false;
+    }
 }

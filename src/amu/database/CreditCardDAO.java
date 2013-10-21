@@ -137,4 +137,30 @@ public class CreditCardDAO {
 
         return false;
     }
+    
+    public boolean checkCreditCardAccess(int customerid, int cardid) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = Database.getConnection();
+
+            String query = "SELECT * FROM credit_card WHERE id=? AND customer_id=?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, cardid);
+            statement.setInt(2, customerid);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+            	return true;
+            } 
+        } catch (SQLException exception) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, exception);
+        } finally {
+            Database.close(connection, statement, resultSet);
+        }
+        return false;
+    }
 }

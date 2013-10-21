@@ -8,6 +8,7 @@ import amu.database.BookDAO;
 import amu.database.PersonalBookListDAO;
 import amu.model.Book;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
 
 public class ViewSingleBookList implements Action {
 	@Override
@@ -16,6 +17,8 @@ public class ViewSingleBookList implements Action {
 
 		
         if (request.getParameter("list_id") == null) {
+        	ErrorMessage error = new ErrorMessage("404 Not found", "Something went wrong");
+        	request.setAttribute("errorMessage", error);
         	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
         }
         int listid = Integer.parseInt(request.getParameter("list_id"));

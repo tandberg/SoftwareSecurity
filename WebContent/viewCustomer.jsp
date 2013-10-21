@@ -33,16 +33,8 @@
             <div>
                 <span>Address #${counter.count}</span>
                 <pre><c:out value="${address.address}"></c:out></pre>
-                <form class="editAdress" action="editAddress.do">
-                    <input type="hidden" name="id" value="${address.id}" />    
-                    <input type="submit" value="Edit adress" />
-
-             
-                </form>
-                <form class="cancelAdress" action="cancelAdress.do">
-                    <input type="hidden" name="id" value="${address.id}" />
-                    <input type="submit" value="Delete adress" />
-                </form>
+              	<span><a href="editAddress.do?id=${address.id}">Edit</a></span>
+                <span><a href="deleteAddress.do?id=${address.id}">Delete</a></span>
  
             </div>
         </c:forEach>
