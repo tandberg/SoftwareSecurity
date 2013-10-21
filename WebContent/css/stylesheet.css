@@ -168,3 +168,11 @@ textarea{
 .viewMoreForm{
 	display: inline;
 }
+form{
+	display: inline;
+}
+
+#recaptcha_widget_div {
+	width: 400px;
+	margin: 0 auto;
+}

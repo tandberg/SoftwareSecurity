@@ -3,16 +3,19 @@ package amu.action;
 import amu.Mailer;
 import amu.database.CustomerDAO;
 import amu.model.Customer;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 class RegisterCustomerAction extends HttpServlet implements Action {
     
     @Override
     public ActionResponse execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         
+    	
+    	
         if (request.getMethod().equals("POST")) {
             CustomerDAO customerDAO = new CustomerDAO();
             Customer customer = customerDAO.findByEmail(request.getParameter("email"));

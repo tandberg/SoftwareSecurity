@@ -15,7 +15,7 @@ class EditAddressAction implements Action {
     public ActionResponse execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
         Customer customer = (Customer) session.getAttribute("customer");
-
+        
         if (customer == null) {
             ActionResponse actionResponse = new ActionResponse(ActionResponseType.REDIRECT, "loginCustomer");
             actionResponse.addParameter("from", "viewCustomer");
@@ -24,7 +24,7 @@ class EditAddressAction implements Action {
 
         AddressDAO addressDAO = new AddressDAO();
         Address address = addressDAO.read(Integer.parseInt(request.getParameter("id")));
-
+        System.out.println(address.getAddress());
         if (request.getMethod().equals("POST")) {
             List<String> messages = new ArrayList<String>();
             request.setAttribute("messages", messages);

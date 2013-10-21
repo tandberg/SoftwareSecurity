@@ -7,13 +7,13 @@
 					<b>Created by:</b>
 				</div>
 				<div>
-					<p>${list.customer.name}</p>
+					<p><c:out value="${list.customer.name}"></c:out> </p>
 				</div>
 				<div>
 					<b>Title:</b>
 				</div>
 				<div>
-					<p class="titleBooklist">"${list.title}"</p>
+					<p class="titleBooklist">"<c:out value="${list.title}"></c:out>"</p>
 				</div>
 				<div class="created">
 					Created
@@ -23,7 +23,7 @@
 				</div>
 			</div>
 			<div class="personalBooklistRight">
-				<b>Description: </b> ${list.description}
+				<b>Description: </b> <c:out value="${list.description}"></c:out>
 				<c:forEach var="book" items="${list.books}" end="2">
 					<li><c:out value="${book.title.name}" /></li>
 				</c:forEach>

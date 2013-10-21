@@ -22,7 +22,7 @@
 				</form>
 			</c:when>
 			<c:otherwise>
-				<h2>Add or create a new list with ${book.title.name}</h2>
+				<h2>Add or create a new list with <c:out value="${book.title.name}"></c:out> </h2>
 
 				<form action="createNewList.do" method="post">
 					<input type="hidden" name="isbn" value="${book.isbn13}" />
@@ -60,7 +60,7 @@
 					<div class="personalBooklistLeft">
 					
 							<div>
-								<p class="titleBooklist">"${list.title}"</p>
+								<p class="titleBooklist"><c:out value="${list.title}"></c:out></p>
 							</div>
 							<div class="created">Created <fmt:formatDate value="${list.createdDate.time}" type="date"
 									dateStyle="short" />
@@ -68,7 +68,7 @@
 							</div>
 						</div>
 						<div class="personalBooklistRight">
-							<b>Description: </b> ${list.description}
+							<b>Description: </b><c:out value="${list.description}"></c:out> 
 							<c:forEach var="book" items="${list.books}" end="2">
 								<li><c:out value="${book.title.name}"/></li>
 							</c:forEach>
@@ -89,14 +89,14 @@
 						<div class="personalBooklistLeft">
 					
 							<div>
-								<p class="titleBooklist">"${list.title}"</p>
+								<p class="titleBooklist"><c:out value="${list.title}"></c:out></p>
 							</div>
 							<div class="created">Created <fmt:formatDate value="${list.createdDate.time}" type="date"
 									dateStyle="short" />
 							</div>
 						</div>
 						<div class="personalBooklistRight">
-							<b>Description: </b> ${list.description}
+							<b>Description: </b><c:out value="${list.description}"></c:out> 
 						
 							<c:forEach var="book" items="${list.books}" end="2">
 								<li><c:out value="${book.title.name}"/></li>

@@ -2,9 +2,9 @@
 	<h2>Single user created booklist</h2>
 	<br>
 	<div>
-		<div><b>Title: </b> ${list.title}</div>
-		<div><b>Description: </b> ${list.description}</div>
-		<div><b>Creator: </b> ${list.customer.name}</div>
+		<div><b>Title: </b> <c:out value="${list.title}"></c:out> </div>
+		<div><b>Description: </b> <c:out value="${list.description}"></c:out> </div>
+		<div><b>Creator: </b> <c:out value="${list.customer.name}"></c:out> </div>
 		<div><b>Created: </b> <fmt:formatDate value="${list.createdDate.time}" type="date" dateStyle="short"/></div>
 		<br>
 		<br>

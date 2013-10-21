@@ -46,14 +46,14 @@
             	<c:forEach var="review" items="${reviews}" varStatus="counter">
 	           		<div class = "singleReview">
 	            		<div class = "singleReviewLeft">
-	           				<div><p class="nameOfReviewer"> Name: ${review.writer.name} </p></div>
+	           				<div><p class="nameOfReviewer"> Name: <c:out value="${review.writer.name}"></c:out>  </p></div>
 	            		</div>
 	            		<div class = "singleReviewRight">
 	            			
-	            			<div><p class="titleReview">"${review.title}"</p></div>
+	            			<div><p class="titleReview">"<c:out value="${review.title}"></c:out>"</p></div>
 			                <div class="reviewedDate">Reviewed <fmt:formatDate value="${review.created.time}" type="date" dateStyle="short"/> </div>
 			               	<br>
-			                <div class="reviewText">${review.text}</div>
+			                <div class="reviewText"><c:out value="${review.text}"></c:out></div>
 			                <br>
 			                <div class="likesDivReview">${review.likes} likes and ${review.dislikes} dislikes </div>
 			                <div> 

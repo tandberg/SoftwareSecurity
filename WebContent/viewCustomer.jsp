@@ -16,9 +16,9 @@
         <c:forEach var="creditCard" items="${creditCards}" varStatus="counter">
             <div>
                 <div>Credit card #${counter.count}</div>
-                <div>Credit card number: ${creditCard.maskedCreditCardNumber}</div>
+                <div>Credit card number: <c:out value="${creditCard.maskedCreditCardNumber}"></c:out> </div>
                 <div>Expiry date: <fmt:formatDate value="${creditCard.expiryDate.time}" type="date" dateStyle="short" /></div>
-                <div>Cardholder's name: ${creditCard.cardholderName}</div>
+                <div>Cardholder's name: <c:out value="${creditCard.cardholderName}"></c:out></div>
                 <div><a href="deleteCreditCard.do?id=${creditCard.id}">Delete</a></div>
             </div>
             <br>
@@ -32,9 +32,18 @@
         <c:forEach var="address" items="${addresses}" varStatus="counter">
             <div>
                 <span>Address #${counter.count}</span>
-                <pre>${address.address}</pre>
-                <span><a href="editAddress.do?id=${address.id}">Edit</a></span>
-                <span><a href="deleteAddress.do?id=${address.id}">Delete</a></span>
+                <pre><c:out value="${address.address}"></c:out></pre>
+                <form class="editAdress" action="editAddress.do">
+                    <input type="hidden" name="id" value="${address.id}" />    
+                    <input type="submit" value="Edit adress" />
+
+             
+                </form>
+                <form class="cancelAdress" action="cancelAdress.do">
+                    <input type="hidden" name="id" value="${address.id}" />
+                    <input type="submit" value="Delete adress" />
+                </form>
+ 
             </div>
         </c:forEach>
     </div>
