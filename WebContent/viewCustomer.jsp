@@ -32,7 +32,7 @@
         <c:forEach var="address" items="${addresses}" varStatus="counter">
             <div>
                 <span>Address #${counter.count}</span>
-                <pre><c:out value="${address.address}"></c:out></pre>
+                <p><c:out value="${address.address}"></c:out></p>
               	<span><a href="editAddress.do?id=${address.id}">Edit</a></span>
                 <span><a href="deleteAddress.do?id=${address.id}">Delete</a></span>
  
@@ -42,9 +42,9 @@
     <div>
         <h2>Your orders</h2>
         <c:forEach var="order" items="${orders}" varStatus="counter">
-            <div>
+            <div class="span3 well">
                 <div>Order #${counter.count}</div>
-                <pre>${order.address.address}</pre>
+                <div>${order.address.address}</div>
                 <div>Date: <fmt:formatDate value="${order.createdDate.time}" type="date" dateStyle="short" /></div>
                 <div>Value: ${order.value}</div>
                 <div>Status: ${order.statusText}</div>
@@ -67,5 +67,6 @@
            </div>
            <div class="divline"></div>
         </c:forEach>
+        
     </div>
 </div>

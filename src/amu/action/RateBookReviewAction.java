@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import amu.database.CustomerDAO;
 import amu.database.ReviewDAO;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
 import amu.model.Review;
 
 public class RateBookReviewAction implements Action {
@@ -30,6 +31,8 @@ public class RateBookReviewAction implements Action {
 		}
 		String liked = request.getParameter("liked");
 		if(liked == null){
+			ErrorMessage error = new ErrorMessage("403 Forbidden", "No, it is not allowed to like more than once");
+			request.setAttribute("errorMessage", error);
 			ActionResponse actionResponse = new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
 			return actionResponse;
 		}
@@ -54,6 +57,8 @@ public class RateBookReviewAction implements Action {
 			}
 		}
 		else{
+			ErrorMessage error = new ErrorMessage("403 Forbidden", "No, it is not allowed to like more than once");
+			request.setAttribute("errorMessage", error);
 			ActionResponse actionResponse = new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
 			return actionResponse;
 		}
@@ -61,6 +66,8 @@ public class RateBookReviewAction implements Action {
 
 
 		// (request.getMethod().equals("GET")) 
+		ErrorMessage error = new ErrorMessage("403 Forbidden", "Ups...");
+		request.setAttribute("errorMessage", error);
 		return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
 	}
 

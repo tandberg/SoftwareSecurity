@@ -56,18 +56,20 @@
 			                <div class="reviewText"><c:out value="${review.text}"></c:out></div>
 			                <br>
 			                <div class="likesDivReview">${review.likes} likes and ${review.dislikes} dislikes </div>
-			                <div> 
+			                <div>
+			                <br>
+			                <p>Was this review helpful?</p> 
 			                <form class="likedForm" action="rateBookReview.do" method="post">
                     			<input type="hidden" name="isbn" value="${book.isbn13}" />
                     			<input type="hidden" name="reviewid" value="${review.id}" />
                     			<input type="hidden" name="liked" value="yes" />
-                    			<input class="liked" type="submit" value="" />
-                			</form>
+                    			<input class="liked" type="submit" value="Yes">
+                    				                			</form>
                 			<form class="dislikedForm" action="rateBookReview.do" method="post">
                     			<input type="hidden" name="isbn" value="${book.isbn13}" />
                     			<input type="hidden" name="reviewid" value="${review.id}" />
                     			<input type="hidden" name="liked" value="no" />
-                    			<input class="disliked" type="submit" value="" />
+                    			<input class="disliked" type="submit" value="No" />
                 			</form>
 			                </div>
 	           			 </div>

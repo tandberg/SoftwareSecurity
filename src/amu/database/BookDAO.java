@@ -5,6 +5,8 @@ import amu.model.Publisher;
 import amu.model.Title;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.*;
 
 public class BookDAO {
@@ -60,14 +62,13 @@ public class BookDAO {
         ResultSet resultSet = null;
         
         try {
-            connection = Database.getConnection();
-            statement = connection.createStatement();
-            
+            connection = Database.getConnection();            
             String query = "SELECT * FROM book, publisher, title "
                     + "WHERE book.id = '"
                     + id + "' "
                     + "AND book.title_id = title.id "
                     + "AND book.publisher_id = publisher.id;";
+            statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery(query);
             Logger.getLogger(this.getClass().getName()).log(Level.FINE, "findByISBN SQL Query: " + query);
             
@@ -96,4 +97,5 @@ public class BookDAO {
         
         return book;
     }
+   
 }

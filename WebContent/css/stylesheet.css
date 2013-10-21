@@ -113,18 +113,6 @@ textarea{
 	margin-left:3px;
     font: normal 16px Arial, Helvetica, sans;
 }
-.liked { 
-    background: url(/bookstore/img/thumbsup.png);
-	width: 32px;
-	height: 36px;
-
-}
-.disliked { 
-    background-image: url(/bookstore/img/thumbsdown.png);
-	width: 32px;
-	height: 36px;
-
-}
 .likedForm{
 	display: inline;
 }
@@ -184,10 +172,25 @@ form{
     border-radius: 3px;
     text-align: center;
     position: fixed;
+    width: 80%;
+    width:1152px;
 }
+.greySpan12{
+  float: left;
+  min-height: 1px;
+  margin-left: 20px;
+}
+
 .undermenu{
 	margin-top: 5%;
 }
 .nav-pills>li{
 	margin-left: 3%;
+}
+.nav-pills > .active > a:hover,
+.nav-pills > .active > a:focus{
+	background-color: #08c;
+}
+#expiryDate{
+	width:80px;
 }
