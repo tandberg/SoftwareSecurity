@@ -36,17 +36,16 @@ public class CustomerDAO {
         Customer customer = null;
 
         Connection connection = null;
-        Statement statement = null;
+        PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         try {
             connection = Database.getConnection();
-            statement = connection.createStatement();
 
-            String query = "SELECT * FROM customer WHERE email='"
-                    + email
-                    + "'";
-            resultSet = statement.executeQuery(query);
+            String query = "SELECT * FROM customer WHERE email=?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            resultSet = statement.executeQuery();
             Logger.getLogger(this.getClass().getName()).log(Level.FINE, "findByEmail SQL Query: " + query);
 
 
@@ -99,22 +98,21 @@ public class CustomerDAO {
 
         DataSource dataSource = null;
         Connection connection = null;
-        Statement statement = null;
+        PreparedStatement statement = null;
 
         try {
             connection = Database.getConnection();
-            statement = connection.createStatement();
 
-            String query = "INSERT INTO customer (email, password, name, activation_token) VALUES ('"
-                    + customer.getEmail()
-                    + "', '"
-                    + customer.getPassword()
-                    + "', '"
-                    + customer.getName()
-                    + "', '"
-                    + customer.getActivationToken()
-                    + "')";
-            statement.executeUpdate(query);
+            String query = "INSERT INTO customer (email, password, name, activation_token) VALUES (?,?,?,?)";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, customer.getEmail());
+            statement.setString(2, customer.getPassword());
+            statement.setString(3, customer.getName());
+            statement.setString(4, customer.getActivationToken());
+            
+            
+            
+            statement.executeUpdate();
             Logger.getLogger(this.getClass().getName()).log(Level.FINE, "register SQL Query: " + query);
 
         } catch (SQLException exception) {
@@ -128,17 +126,16 @@ public class CustomerDAO {
 
     public Customer activate(Customer customer) {
         Connection connection = null;
-        Statement statement = null;
+        PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         try {
             connection = Database.getConnection();
-            statement = connection.createStatement();
 
-            String query = "UPDATE customer SET activation_token=NULL WHERE email='"
-                    + customer.getEmail()
-                    + "'";
-            statement.executeUpdate(query);
+            String query = "UPDATE customer SET activation_token=NULL WHERE email=?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, customer.getEmail());
+            statement.executeUpdate();
             Logger.getLogger(this.getClass().getName()).log(Level.FINE, "activate SQL Query: " + query);
 
             customer.setActivationToken(null);
@@ -154,17 +151,16 @@ public class CustomerDAO {
     	Customer customer = null;
 
         Connection connection = null;
-        Statement statement = null;
+        PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         try {
             connection = Database.getConnection();
-            statement = connection.createStatement();
 
-            String query = "SELECT * FROM customer WHERE id='"
-                    + customer_id
-                    + "'";
-            resultSet = statement.executeQuery(query);
+            String query = "SELECT * FROM customer WHERE id=?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, customer_id);
+            resultSet = statement.executeQuery();
             Logger.getLogger(this.getClass().getName()).log(Level.FINE, "findByID SQL Query: " + query);
 
 

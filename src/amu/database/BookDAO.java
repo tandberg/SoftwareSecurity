@@ -10,23 +10,23 @@ import java.util.List;
 import java.util.logging.*;
 
 public class BookDAO {
+	Book book = null;
+	
+	Connection connection = null;
+	PreparedStatement statement = null;
+	ResultSet resultSet = null;
     public Book findByISBN(String isbn) {
-        Book book = null;
-        
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
         
         try {
             connection = Database.getConnection();
-            statement = connection.createStatement();
             
             String query = "SELECT * FROM book, publisher, title "
-                    + "WHERE book.isbn13 = '"
-                    + isbn + "' "
+                    + "WHERE book.isbn13 = ? "
                     + "AND book.title_id = title.id "
                     + "AND book.publisher_id = publisher.id;";
-            resultSet = statement.executeQuery(query);
+            statement = connection.prepareStatement(query);
+            statement.setString(1, isbn);
+            resultSet = statement.executeQuery();
             Logger.getLogger(this.getClass().getName()).log(Level.FINE, "findByISBN SQL Query: " + query);
             
             if (resultSet.next()) {
@@ -58,18 +58,20 @@ public class BookDAO {
         Book book = null;
         
         Connection connection = null;
-        Statement statement = null;
+        PreparedStatement statement = null;
         ResultSet resultSet = null;
         
         try {
-            connection = Database.getConnection();            
+            connection = Database.getConnection();
+            
             String query = "SELECT * FROM book, publisher, title "
-                    + "WHERE book.id = '"
-                    + id + "' "
+                    + "WHERE book.id = ? "
                     + "AND book.title_id = title.id "
                     + "AND book.publisher_id = publisher.id;";
             statement = connection.prepareStatement(query);
-            resultSet = statement.executeQuery(query);
+
+            statement.setInt(1, id);
+            resultSet = statement.executeQuery();
             Logger.getLogger(this.getClass().getName()).log(Level.FINE, "findByISBN SQL Query: " + query);
             
             if (resultSet.next()) {
