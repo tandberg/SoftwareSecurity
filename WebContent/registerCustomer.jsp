@@ -30,6 +30,10 @@
                                     <td><input id="password" name="password" type="text" autocomplete="off" /></td>
                                 </tr>
                                 <tr>
+                                <td>
+                                	<label>ReCaptcha</label>
+                                </td>
+                                <td>
                                 	<%@ page import="net.tanesha.recaptcha.ReCaptcha"%>
 									<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory"%>
 									<%
@@ -37,6 +41,7 @@
 														"6Le0JOkSAAAAADjDO9CQncwf72xoSVUF_gvoryI4", "6Le0JOkSAAAAAOz6HWJBdfLjj-0iuI0qrovO4DA5", false);
 												out.print(c.createRecaptchaHtml(null, null));
 									%>
+								</td>
                                 </tr>
                             </table>
                             

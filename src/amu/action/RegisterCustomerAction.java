@@ -3,6 +3,8 @@ package amu.action;
 import amu.Mailer;
 import amu.database.CustomerDAO;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
+import amu.security.InputControl;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,10 +42,19 @@ class RegisterCustomerAction extends HttpServlet implements Action {
         	
         	CustomerDAO customerDAO = new CustomerDAO();
             Customer customer = customerDAO.findByEmail(request.getParameter("email"));
+            
 
             if (customer == null) {
-            	
-            	
+            	if(!InputControl.isValidEmail(request.getParameter("email"))){
+            		ErrorMessage error = new ErrorMessage("Denied", "Did you write an email?");
+            		request.setAttribute("errorMessage", error);
+                    return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+            	}
+            	if(!InputControl.isValidPassword(request.getParameter("password"))){
+             		ErrorMessage error = new ErrorMessage("Denied", "The length needs to be more than 8. Your password needs to have 3 or more digits and upper/lower case letters");
+            		request.setAttribute("errorMessage", error);
+                    return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");            	
+                }
                 customer = new Customer();
                 customer.setEmail(request.getParameter("email"));
                 customer.setName(request.getParameter("name"));

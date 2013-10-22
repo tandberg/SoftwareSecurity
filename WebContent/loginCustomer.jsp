@@ -5,7 +5,6 @@
             <div class="general-form">
                 <form action="loginCustomer.do" method="post">
                     <c:if test="${not empty values.from}">
-                        <input type="hidden" name="from" value="${values.from}">
                     </c:if>
                     <table class="general-table">
                         <tr>
@@ -13,7 +12,7 @@
                                 <label for="email">Email</label>
                             </td>
                             <td>
-                                <input id="email" name="email" type="text" value="${values.email}" />
+                                <input id="email" name="email" type="text" />
                             </td>
                             <c:if test="${not empty messages.emailOrpassword}">
                                 <td><span class="error">${messages.emailOrpassword}</span></td>
@@ -21,7 +20,7 @@
                         </tr>
                         <tr>
                             <td><label for="password">Password</label></td>
-                            <td><input id="password" name="password" type="text" autocomplete="off" /></td>
+                            <td><input id="password" name="password" type="password" autocomplete="off" /></td>
                         </tr>
 						<tr>
 						<td>

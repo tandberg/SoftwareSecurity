@@ -2,10 +2,14 @@ package amu.action;
 
 import amu.database.CustomerDAO;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
+import amu.security.InputControl;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,6 +33,12 @@ class ChangeEmailAction implements Action {
 
             List<String> messages = new ArrayList<String>();
             request.setAttribute("messages", messages);
+            
+        	if(!InputControl.isValidEmail(request.getParameterValues("email")[0])){
+        		ErrorMessage error = new ErrorMessage("Denied", "Did you write an email?");
+        		request.setAttribute("errorMessage", error);
+                return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+        	}
 
             String[] email = request.getParameterValues("email");
             values.put("email", email);

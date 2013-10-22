@@ -2,7 +2,9 @@ package amu.action;
 
 import amu.database.CustomerDAO;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
 import amu.security.BCrypt;
+import amu.security.InputControl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,12 @@ class ChangePasswordAction implements Action {
         if (request.getMethod().equals("POST")) {
             List<String> messages = new ArrayList<String>();
             request.setAttribute("messages", messages);
+            
+        	if(!InputControl.isValidPassword(request.getParameterValues("password")[1])){
+         		ErrorMessage error = new ErrorMessage("Denied", "The length needs to be more than 8. Your password needs to have 3 or more digits and upper/lower case letters");
+        		request.setAttribute("errorMessage", error);
+                return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");            	
+            }
 
             String[] password = request.getParameterValues("password");
 
