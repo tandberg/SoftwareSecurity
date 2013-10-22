@@ -18,6 +18,9 @@ td{
     width: 25%;
     float-left: 10%;
 }
+#password #email{
+	width: 300px;
+}
 
 header{
     background-color: #FFFFFF;
@@ -178,7 +181,7 @@ form{
 .greySpan12{
   float: left;
   min-height: 1px;
-  margin-left: 20px;
+  margin-left: 3%;
 }
 
 .undermenu{
