@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Login</h1>
+	<h1>Login</h1>
     <c:choose>
         <c:when test="${empty customer}">
             <div class="general-form">
@@ -22,9 +22,17 @@
                         <tr>
                             <td><label for="password">Password</label></td>
                             <td><input id="password" name="password" type="text" autocomplete="off" /></td>
-             
                         </tr>
-                    </table>
+						<tr>
+							<%@ page import="net.tanesha.recaptcha.ReCaptcha"%>
+							<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory"%>
+							<%
+								ReCaptcha c = ReCaptchaFactory.newReCaptcha(
+												"6Le0JOkSAAAAADjDO9CQncwf72xoSVUF_gvoryI4", "6Le0JOkSAAAAAOz6HWJBdfLjj-0iuI0qrovO4DA5", false);
+										out.print(c.createRecaptchaHtml(null, null));
+							%>
+						</tr>
+					</table>
                     <div>
                         <input type="submit" value="Submit">
                     </div>

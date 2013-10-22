@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
+
 
 class RegisterCustomerAction extends HttpServlet implements Action {
     
@@ -17,10 +20,30 @@ class RegisterCustomerAction extends HttpServlet implements Action {
     	
     	
         if (request.getMethod().equals("POST")) {
-            CustomerDAO customerDAO = new CustomerDAO();
+            
+        	//Validate captcha
+			String remoteAddr = request.getRemoteAddr();
+	        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+	        reCaptcha.setPrivateKey("6Le0JOkSAAAAAOz6HWJBdfLjj-0iuI0qrovO4DA5");
+
+	        String challenge = request.getParameter("recaptcha_challenge_field");
+	        String uresponse = request.getParameter("recaptcha_response_field");
+	        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
+			
+	        if (reCaptchaResponse.isValid()) {
+	        	//All is well
+	        } else {
+	        	//There is something rotten in the state of Denmark
+	        	return new ActionResponse(ActionResponseType.FORWARD, "registerCustomer");
+	        }
+        	
+        	
+        	CustomerDAO customerDAO = new CustomerDAO();
             Customer customer = customerDAO.findByEmail(request.getParameter("email"));
 
             if (customer == null) {
+            	
+            	
                 customer = new Customer();
                 customer.setEmail(request.getParameter("email"));
                 customer.setName(request.getParameter("name"));

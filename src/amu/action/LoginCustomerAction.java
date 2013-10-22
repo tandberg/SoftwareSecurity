@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
+
 import com.sun.xml.rpc.util.Constants;
 import com.sun.xml.ws.runtime.dev.Session;
 
@@ -38,6 +41,23 @@ class LoginCustomerAction implements Action {
 
 				if (customer.getActivationToken() == null) {
 					if (BCrypt.checkpw(request.getParameter("password"), customer.getPassword())){							//customer.getPassword().equals(CustomerDAO.hashPassword(request.getParameter("password")))) {
+
+						//Validate captcha
+						String remoteAddr = request.getRemoteAddr();
+				        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+				        reCaptcha.setPrivateKey("6Le0JOkSAAAAAOz6HWJBdfLjj-0iuI0qrovO4DA5");
+
+				        String challenge = request.getParameter("recaptcha_challenge_field");
+				        String uresponse = request.getParameter("recaptcha_response_field");
+				        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
+						
+				        if (reCaptchaResponse.isValid()) {
+				        	//All is well
+				        } else {
+				        	//There is something rotten in the state of Denmark
+				        	return new ActionResponse(ActionResponseType.FORWARD, "loginCustomer");
+				        }
+
 						HttpSession session = request.getSession(true);
 						session.invalidate();
 						session = request.getSession();
@@ -58,7 +78,7 @@ class LoginCustomerAction implements Action {
 			// Forward to login form with error messages
 			return new ActionResponse(ActionResponseType.FORWARD, "loginCustomer");
 		}
-
+        
 		return new ActionResponse(ActionResponseType.FORWARD, "loginCustomer");
 	}
 }
