@@ -2,12 +2,14 @@ package amu.database;
 
 import amu.Config;
 import amu.model.Customer;
+import amu.security.BCrypt;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.*;
 import java.util.logging.*;
+
 import javax.sql.*;
 import javax.xml.bind.DatatypeConverter;
 
@@ -15,12 +17,9 @@ public class CustomerDAO {
 
     public static String hashPassword(String plainTextPassword) {
         String hashedPassword = null;
-        try {
-            // Calculate SHA1(password+salt)
-            hashedPassword = DatatypeConverter.printHexBinary(MessageDigest.getInstance("SHA1").digest((plainTextPassword + Config.SALT).getBytes()));
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // Calculate SHA1(password+salt)
+		hashedPassword = BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
+		//hashedPassword = DatatypeConverter.printHexBinary(MessageDigest.getInstance("SHA1").digest((plainTextPassword + Config.SALT).getBytes()));
         
         return hashedPassword;
     }

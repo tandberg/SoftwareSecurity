@@ -28,15 +28,20 @@ class ChangePasswordAction implements Action {
 
             String[] password = request.getParameterValues("password");
 
+            if (CustomerDAO.hashPassword(password[0]).equals(customer.getPassword()) == false) {
+                messages.add("Old password did not match. Please try again.");
+                return new ActionResponse(ActionResponseType.FORWARD, "changePassword");
+            }
+            
             // Validate that new email is typed in the same both times
-            if (password[0].equals(password[1]) == false) {
+            else if (password[1].equals(password[2]) == false) {
                 messages.add("Password and repeated password did not match. Please try again.");
                 return new ActionResponse(ActionResponseType.FORWARD, "changePassword");
             }
 
             // Validation OK, do business logic
             CustomerDAO customerDAO = new CustomerDAO();
-            customer.setPassword(CustomerDAO.hashPassword(password[0]));
+            customer.setPassword(CustomerDAO.hashPassword(password[1]));
             if (customerDAO.edit(customer) == false) {
                 messages.add("An error occured.");
                 return new ActionResponse(ActionResponseType.FORWARD, "changePassword");
