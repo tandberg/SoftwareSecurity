@@ -2,8 +2,11 @@ package amu.action;
 
 import amu.database.CustomerDAO;
 import amu.model.Customer;
+import amu.security.BCrypt;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,7 +31,7 @@ class ChangePasswordAction implements Action {
 
             String[] password = request.getParameterValues("password");
 
-            if (CustomerDAO.hashPassword(password[0]).equals(customer.getPassword()) == false) {
+            if (BCrypt.checkpw(password[0], customer.getPassword())) {
                 messages.add("Old password did not match. Please try again.");
                 return new ActionResponse(ActionResponseType.FORWARD, "changePassword");
             }

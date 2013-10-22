@@ -19,6 +19,7 @@ public class CustomerDAO {
         String hashedPassword = null;
         // Calculate SHA1(password+salt)
 		hashedPassword = BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
+		
 		//hashedPassword = DatatypeConverter.printHexBinary(MessageDigest.getInstance("SHA1").digest((plainTextPassword + Config.SALT).getBytes()));
         
         return hashedPassword;

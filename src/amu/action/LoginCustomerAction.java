@@ -2,6 +2,7 @@ package amu.action;
 
 import amu.database.CustomerDAO;
 import amu.model.Customer;
+import amu.security.BCrypt;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +37,7 @@ class LoginCustomerAction implements Action {
 				values.put("email", request.getParameter("email"));
 
 				if (customer.getActivationToken() == null) {
-					if (customer.getPassword().equals(CustomerDAO.hashPassword(request.getParameter("password")))) {
+					if (BCrypt.checkpw(request.getParameter("password"), customer.getPassword())){							//customer.getPassword().equals(CustomerDAO.hashPassword(request.getParameter("password")))) {
 						HttpSession session = request.getSession(true);
 						session.invalidate();
 						session = request.getSession();
