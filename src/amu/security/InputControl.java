@@ -44,7 +44,23 @@ public class InputControl {
 			}  
 		}  
 		return true;  
-	}  
+	}
+	public static boolean isValidCreditCardNumber(String creditCardNumber){
+		String NUMBERS = "0123456789";
+		if(creditCardNumber.length() != 16){
+			return false;
+		}
+		for (int i = 0; i < creditCardNumber.length(); i++) {
+			if(!NUMBERS.contains(creditCardNumber.charAt(i) + "")){
+				return false;
+			}
+		}
+		return true;
+		
+	}
+	public static boolean isValidName(String name) {
+	    return name.matches("[a-zA-Z]+");
+	}
 
 
 }

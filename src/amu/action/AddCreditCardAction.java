@@ -3,12 +3,16 @@ package amu.action;
 import amu.database.CreditCardDAO;
 import amu.model.CreditCard;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
+import amu.security.InputControl;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,9 +35,34 @@ class AddCreditCardAction implements Action {
             request.setAttribute("messages", messages);
             
             Calendar expiryDate = Calendar.getInstance();
+            try {
+            	Integer.parseInt(request.getParameter("expiryYear"));
+            	Integer.parseInt(request.getParameter("expiryMonth"));
+            	
+			} catch (Exception e) {
+            	ErrorMessage error = new ErrorMessage("403 Forbidden", "Did you change something?");
+            	request.setAttribute("errorMessage", error);
+            	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+			}
             expiryDate.set(Integer.parseInt(request.getParameter("expiryYear")), Integer.parseInt(request.getParameter("expiryMonth")), 1);
             
             CreditCardDAO creditCardDAO = new CreditCardDAO();
+            if(request.getParameter("cardholderName") == null || request.getParameter("creditCardNumber") == null){
+            	ErrorMessage error = new ErrorMessage("403 Forbidden", "Add a name or creditcard number!");
+            	request.setAttribute("errorMessage", error);
+            	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+            }
+            
+            if(!InputControl.isValidCreditCardNumber(request.getParameter("creditCardNumber"))){
+            	ErrorMessage error = new ErrorMessage("403 Forbidden", "Not a valid number");
+            	request.setAttribute("errorMessage", error);
+            	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+            }
+            if(!InputControl.isValidName(request.getParameter("cardholderName"))){
+            	ErrorMessage error = new ErrorMessage("403 Forbidden", "A name can not contain numbers");
+            	request.setAttribute("errorMessage", error);
+            	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+            }
             CreditCard creditCard = new CreditCard(
                     customer, 
                     request.getParameter("creditCardNumber"), 
