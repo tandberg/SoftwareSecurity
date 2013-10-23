@@ -20,7 +20,6 @@ class ReviewOrderAction implements Action {
 
         if (customer == null) {
             ActionResponse actionResponse = new ActionResponse(ActionResponseType.REDIRECT, "loginCustomer");
-            actionResponse.addParameter("from", "reviewOrder");
             return actionResponse;
         }
         

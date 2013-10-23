@@ -59,7 +59,17 @@ public class InputControl {
 		
 	}
 	public static boolean isValidName(String name) {
-	    return name.matches("[a-zA-Z]+");
+		if(name.length() == 0){
+			return false;
+		}
+		for (int i = 0; i < name.length(); i++) {
+			if(!Character.isLetter(name.charAt(i))){
+				if(!Character.isSpaceChar(name.charAt(i))){
+					return false;
+				}
+			}
+		}
+		return true; 
 	}
 
 

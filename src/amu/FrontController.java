@@ -18,32 +18,25 @@ public class FrontController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {				System.out.println("halla1");
+		try {				
 
 			Action action = ActionFactory.getAction(request);
-			System.out.println("halla2");
 
 			//If a user types in a page that does not exist.
-			if(action == null){
-				System.out.println("test");
-				ErrorMessage error = new ErrorMessage("404 Not found", "The page you requested doesnt exist");
-				request.setAttribute("errorMessage", error);
-				request.getRequestDispatcher("/generalErrorMessage.jsp").forward(request, response);
-			}
-			else {
-				ActionResponse actionResponse = action.execute(request, response);
-				
-				if (actionResponse.getType() == ActionResponseType.REDIRECT) {
-					response.sendRedirect(actionResponse.getURL() + actionResponse.getParameterString());
-				} else { // actionResponse.getType() == ActionResponse.Type.FORWARD
-					request.getRequestDispatcher(actionResponse.getURL()).forward(request, response);
-				}
+
+
+			ActionResponse actionResponse = action.execute(request, response);
+
+			if (actionResponse.getType() == ActionResponseType.REDIRECT) {
+				response.sendRedirect(actionResponse.getURL() + actionResponse.getParameterString());
+			} else { // actionResponse.getType() == ActionResponse.Type.FORWARD
+				request.getRequestDispatcher(actionResponse.getURL()).forward(request, response);
 			}
 
+
 		} catch (Exception e) {
-			ErrorMessage error = new ErrorMessage("404 Not found", "The page you requested doesnt exist");
-			request.setAttribute("errorMessage", error);
-			request.getRequestDispatcher("/generalErrorMessage.jsp").forward(request, response);
+            throw new ServletException("Executing action failed.", e);
+
 		}
 	}
 }

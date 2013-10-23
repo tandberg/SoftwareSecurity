@@ -9,6 +9,7 @@ import amu.database.ReviewDAO;
 import amu.model.Book;
 import amu.model.Cart;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
 
 public class SubmitReviewAction implements Action {
 	
@@ -40,8 +41,9 @@ public class SubmitReviewAction implements Action {
         }
 
         
-
-        return new ActionResponse(ActionResponseType.REDIRECT, "loginCustomer");
+		ErrorMessage error = new ErrorMessage("Denied", "Something is wrong");
+		request.setAttribute("errorMessage", error);
+        return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
     }
 
 }

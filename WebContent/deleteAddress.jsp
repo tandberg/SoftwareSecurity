@@ -1,7 +1,7 @@
 <div class="container">
     <h1>Delete Address</h1>
     <div>Do you want to delete the following address?</div>
-    <pre>${address.address}</pre>
+    <div><c:out value="${address.address}"></c:out></div>
     <form action="deleteAddress.do" method="post">
         <c:if test="${not empty messages}">
             <c:forEach var="message" items="${messages}">

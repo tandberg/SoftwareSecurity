@@ -27,7 +27,6 @@ class RegisterCustomerAction extends HttpServlet implements Action {
 			String remoteAddr = request.getRemoteAddr();
 	        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
 	        reCaptcha.setPrivateKey("6Le0JOkSAAAAAOz6HWJBdfLjj-0iuI0qrovO4DA5");
-
 	        String challenge = request.getParameter("recaptcha_challenge_field");
 	        String uresponse = request.getParameter("recaptcha_response_field");
 	        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
@@ -41,6 +40,9 @@ class RegisterCustomerAction extends HttpServlet implements Action {
         	
         	
         	CustomerDAO customerDAO = new CustomerDAO();
+        	if(request.getParameter("email") == null){
+	        	return new ActionResponse(ActionResponseType.FORWARD, "registerCustomer");
+        	}
             Customer customer = customerDAO.findByEmail(request.getParameter("email"));
             
 

@@ -21,6 +21,13 @@ public class ViewSingleBookList implements Action {
         	request.setAttribute("errorMessage", error);
         	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
         }
+        try {
+        	Integer.parseInt(request.getParameter("list_id"));
+		} catch (Exception e) {
+    		ErrorMessage error = new ErrorMessage("Denied", "Do not change the list id to text please");
+    		request.setAttribute("errorMessage", error);
+            return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");		}
+        
         int listid = Integer.parseInt(request.getParameter("list_id"));
 
         

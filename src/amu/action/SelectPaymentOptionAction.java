@@ -6,7 +6,10 @@ import amu.model.Address;
 import amu.model.Cart;
 import amu.model.CreditCard;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
+
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,6 +41,18 @@ class SelectPaymentOptionAction implements Action {
         
         // Handle credit card selection submission
         if (request.getMethod().equals("POST")) {
+        	if(request.getParameter("creditCardID") == null){
+        		ErrorMessage error = new ErrorMessage("Denied", "Something is wrong");
+        		request.setAttribute("errorMessage", error);
+                return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+        	}
+        	try {
+				Integer.parseInt(request.getParameter("creditCardID"));
+			} catch (NumberFormatException e) {
+        		ErrorMessage error = new ErrorMessage("Denied", "Ups, this id is not a number");
+        		request.setAttribute("errorMessage", error);
+                return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+            }
             cart.setCreditCard(creditCardDAO.read(Integer.parseInt(request.getParameter("creditCardID"))));
             return new ActionResponse(ActionResponseType.REDIRECT, "reviewOrder");
         }

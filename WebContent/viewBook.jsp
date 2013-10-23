@@ -7,7 +7,7 @@
             <div class = "index-item"><a href="debug/list_books.jsp">List books</a></div>
         </c:when>
         <c:otherwise>
-            <h2>${book.title.name}</h2>
+            <h2><c:out value="${book.title.name}"></c:out></h2>
             <div>
                 <ul class="booklist">
                     <li>
@@ -16,16 +16,18 @@
                             ${author.name}<c:if test="${!it.last}">, </c:if>
                         </c:forEach>
                     </li>
-                    <li><b>Publisher:</b> ${book.publisher.name}</li>
-                    <li><b>Published:</b> ${book.published}</li>
-                    <li><b>Edition:</b> ${book.edition} (${book.binding})</li>
-                    <li><b>ISBN:</b> ${book.isbn13}</li>
-                    <li><b>Price:</b> ${book.price}</li>
+                    <li><b>Publisher:</b> <c:out value="${book.publisher.name}"></c:out></li>
+                    <li><b>Published:</b> <c:out value="${book.published}"></c:out></li>
+                    <li><b>Edition:</b> <c:out value="${book.edition} (${book.binding})"></c:out> </li>
+                    <li><b>ISBN:</b> <c:out value="${book.isbn13}"></c:out></li>
+                    <li><b>Price:</b> <c:out value="${book.price}"></c:out></li>
                 </ul>
             </div>
+            <br>
             <div>
-                <b>Description: </b>${book.description}
+                <b>Description: </b> <c:out value="${book.description}"></c:out>
             </div>
+            <br>
             <div>
                 <form class="addtocart" action="addBookToCart.do" method="post">
                     <input type="hidden" name="isbn" value="${book.isbn13}" />
@@ -34,7 +36,7 @@
                 </form>
                 <form class="addToWishList" action="viewUserBooklists.do" method="post">
                     <input type="hidden" name="isbn" value="${book.isbn13}" />                
-                    <input type="submit" value="Add to wishlist" />
+                    <input type="submit" value="Add to personal booklist" />
                 </form>
                 <form class="addreview" action="addReviewToBook.do" method="post">
                     <input type="hidden" name="isbn" value="${book.isbn13}" />                

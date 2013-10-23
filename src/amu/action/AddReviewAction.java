@@ -9,6 +9,7 @@ import amu.model.Book;
 import amu.model.Cart;
 import amu.model.CartItem;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
 
 public class AddReviewAction implements Action {
     @Override
@@ -30,13 +31,18 @@ public class AddReviewAction implements Action {
         
         
         if (request.getParameter("isbn") == null ){
-			ActionResponse actionResponse = new ActionResponse(ActionResponseType.REDIRECT, "loginCustomer");
-			return actionResponse;
+    		ErrorMessage error = new ErrorMessage("Denied", "Do not change the isbn please.");
+    		request.setAttribute("errorMessage", error);
+            return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
             
         }
         BookDAO bookDAO = new BookDAO();
         Book book = bookDAO.findByISBN(request.getParameter("isbn"));
-        
+        if(book == null){
+    		ErrorMessage error = new ErrorMessage("Denied", "This book do not exist...");
+    		request.setAttribute("errorMessage", error);
+            return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+        }
         ActionResponse actionResponse = new ActionResponse(ActionResponseType.FORWARD, "addReview");
         request.setAttribute("isbn", book.getIsbn13());
         request.setAttribute("name", book.getTitle().getName());

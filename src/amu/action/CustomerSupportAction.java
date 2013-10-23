@@ -2,9 +2,14 @@ package amu.action;
 
 import amu.Mailer;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 
 class CustomerSupportAction implements Action {
 
@@ -20,6 +25,33 @@ class CustomerSupportAction implements Action {
         }
 
         if (request.getMethod().equals("POST")) {
+			
+        	String remoteAddr = request.getRemoteAddr();
+	        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+	        reCaptcha.setPrivateKey("6Le0JOkSAAAAAOz6HWJBdfLjj-0iuI0qrovO4DA5");
+
+	        String challenge = request.getParameter("recaptcha_challenge_field");
+	        String uresponse = request.getParameter("recaptcha_response_field");
+	        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
+			
+	        if (reCaptchaResponse.isValid()) {
+	        	//All is well
+	        } else {
+	        	//There is something rotten in the state of Denmark
+        		ErrorMessage error = new ErrorMessage("Denied", "Are you an robot?");
+        		request.setAttribute("errorMessage", error);
+                return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");	        }
+        	
+        	if(request.getParameter("department") == null || 
+                    request.getParameter("subject") == null || 
+                    request.getParameter("content") == null ||
+                    request.getParameter("fromAddr") == null ||
+                    request.getParameter("fromName") == null){
+        		
+        		ErrorMessage error = new ErrorMessage("Denied", "What are you up to? :(");
+        		request.setAttribute("errorMessage", error);
+                return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+        	}
             Mailer.send(request.getParameter("department"), 
                     request.getParameter("subject"), 
                     request.getParameter("content"), 

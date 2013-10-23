@@ -22,10 +22,10 @@
         </c:otherwise>
     </c:choose>
     <h2>Shipping address:</h2>
-    <div><pre>${cart.shippingAddress.address}</pre></div>
+    <div><c:out value="${cart.shippingAddress.address}"></c:out></div>
     <h2>Payment method:</h2>
-    <div>Credit card number: ${cart.creditCard.maskedCreditCardNumber}</div>
+    <div>Credit card number: <c:out value="${cart.creditCard.maskedCreditCardNumber}"></c:out></div>
     <div>Expiry date: <fmt:formatDate value="${cart.creditCard.expiryDate.time}" type="date" dateStyle="short" /></div>
-    <div>Cardholder's name: ${cart.creditCard.cardholderName}</div>
+    <div>Cardholder's name: <c:out value="${cart.creditCard.cardholderName}"></c:out></div>
     <div><a href="placeOrder.do">Place order</a></div>
 </div>
