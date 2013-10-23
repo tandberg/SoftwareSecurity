@@ -35,8 +35,9 @@ public class FrontController extends HttpServlet {
 
 
 		} catch (Exception e) {
-            throw new ServletException("Executing action failed.", e);
-
+			ErrorMessage error = new ErrorMessage("404 Not found", "The page you requested doesnt exist");
+			request.setAttribute("errorMessage", error);
+			request.getRequestDispatcher("/generalErrorMessage.jsp").forward(request, response);
 		}
 	}
 }
