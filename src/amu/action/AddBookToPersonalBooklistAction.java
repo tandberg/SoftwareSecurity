@@ -9,6 +9,7 @@ import amu.database.PersonalBookListDAO;
 import amu.database.ReviewDAO;
 import amu.model.Book;
 import amu.model.Customer;
+import amu.model.ErrorMessage;
 import amu.model.PersonalBookList;
 
 public class AddBookToPersonalBooklistAction implements Action {
@@ -31,9 +32,13 @@ public class AddBookToPersonalBooklistAction implements Action {
         PersonalBookListDAO personalBookListDAO = new PersonalBookListDAO();
         PersonalBookList personalBookList = personalBookListDAO.findListByID(Integer.parseInt(request.getParameter("list_id")));
         if(book == null){
+        	ErrorMessage error = new ErrorMessage("403 Forbidden", "Something went wrong");
+        	request.setAttribute("errorMessage", error);
         	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
         }
         if(personalBookList == null){
+        	ErrorMessage error = new ErrorMessage("403 Forbidden", "Something went wrong");
+        	request.setAttribute("errorMessage", error);
         	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
         }
         
