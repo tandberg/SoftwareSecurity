@@ -32,9 +32,24 @@ public class CancelOrderAction implements Action {
             actionResponse.addParameter("from", "cancelOrder");
             return actionResponse;
         }
+        try {
+        	Integer.parseInt(request.getParameter("orderId"));
+		} catch (Exception e) {
+            ActionResponse actionResponse = new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+            ErrorMessage error = new ErrorMessage("403 Forbidden", "Ups, is this a number?");
+            request.setAttribute("errorMessage", error);
+            return actionResponse;		
+        }
         int orderId = Integer.parseInt(request.getParameter("orderId"));
         OrderDAO orderDao = new OrderDAO();
         Order order = orderDao.getSingleOrderByID(orderId, customer);
+        
+        if(!orderDao.checkOrderAccess(customer.getId(), orderId)){
+            ActionResponse actionResponse = new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
+            ErrorMessage error = new ErrorMessage("403 Forbidden", "You are not allowed to cancel this order");
+            request.setAttribute("errorMessage", error);
+            return actionResponse;	
+        }
         
         if(order == null){
             ActionResponse actionResponse = new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");

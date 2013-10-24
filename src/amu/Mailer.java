@@ -50,9 +50,9 @@ public class Mailer {
 
             // The restriction to ntnu.no-recipients is here try to avoid spamming (too many) innocents.
             // Do not remove it before you've secured all mail-sending code.
-            if (to.endsWith("ntnu.no")) {
+            //if (to.endsWith("ntnu.no")) {
                 Transport.send(message);
-            }
+            //}
         } catch (Exception exception) {
             Logger.getLogger(Mailer.class.getName()).log(Level.SEVERE, null, exception);
         } finally {

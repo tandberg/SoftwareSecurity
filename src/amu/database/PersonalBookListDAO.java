@@ -129,6 +129,28 @@ public class PersonalBookListDAO {
 
 		return null;
 	}
+	public boolean accessToList(int listid, int customerid){
+		try {
+			connection = Database.getConnection();
+			String query = "SELECT * FROM `user_booklist` WHERE id=? AND customer_id=?";
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, listid);
+			statement.setInt(2, customerid);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				return true;
+				
+			}
+			
+			} catch (SQLException exception) {
+				Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, exception);
+				return false;
+		} finally {
+			Database.close(connection, statement, resultSet);
+		}
+
+		return false;
+	}
 	public List<PersonalBookList> browsePersonalBooklists(Customer customer){
 		try {
 			connection = Database.getConnection();

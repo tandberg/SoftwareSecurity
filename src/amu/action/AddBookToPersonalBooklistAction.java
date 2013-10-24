@@ -30,7 +30,22 @@ public class AddBookToPersonalBooklistAction implements Action {
         Book book = bookDAO.findByISBN(request.getParameter("isbn"));
         
         PersonalBookListDAO personalBookListDAO = new PersonalBookListDAO();
+        int listid = -1;
+        try {
+        	listid = Integer.parseInt(request.getParameter("list_id"));
+		} catch (Exception e) {
+        	ErrorMessage error = new ErrorMessage("403 Forbidden", "Something went wrong");
+        	request.setAttribute("errorMessage", error);
+        	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");		
+        }
+        if(!personalBookListDAO.accessToList(listid, customer.getId())){
+        	ErrorMessage error = new ErrorMessage("403 Forbidden", "Dont change the id, you are not allowed to add books to this list.");
+        	request.setAttribute("errorMessage", error);
+        	return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");	
+        }
+        
         PersonalBookList personalBookList = personalBookListDAO.findListByID(Integer.parseInt(request.getParameter("list_id")));
+        
         if(book == null){
         	ErrorMessage error = new ErrorMessage("403 Forbidden", "Something went wrong");
         	request.setAttribute("errorMessage", error);

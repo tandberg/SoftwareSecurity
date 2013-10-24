@@ -9,8 +9,8 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>" />
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" language="Javascript" 
-        src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js">
-</script>
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Amu-Darya Bookstore</title>
     </head>
@@ -26,16 +26,18 @@
 				<li><a href="/bookstore/debug/list_books.jsp">List books</a></li>
 				<li><a href="/bookstore/customerSupport.do">Complaint</a></li>
 				<li><a href="/bookstore/viewAllBooklistsAction.do">All booklists</a></li>
-				<li><a href="/bookstore/debug/mail_log.jsp">View mail log</a></li>
-
+				<c:if test="${not empty customer}">
+								<li><p class="text-right"><small>Logged in as:<br> <c:out value="${customer.name}"></c:out></small></p></li>
+				</c:if>
 			</ul>  
 		</div>
 	</div>
-	<div class ="row undermenu">   
+	<div class ="undermenu">   
         <a href="<c:url value="/" />" > <img src="<c:url value = "/img/amudarya.png" />" /> </a>
         <span class="view-cart-link"><a href="<c:url value = "/viewCart.do" />">View cart</a></span>
      </div> 
     </header>
+
     <body>
     
 

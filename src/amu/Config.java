@@ -12,10 +12,10 @@ public class Config {
 //    public final static String EMAIL_FROM_NAME = "Amu-Darya";
 	  public final static String EMAIL_SMTP_HOST = "smtp.gmail.com";
 	  public final static String EMAIL_SMTP_PORT = "587";
-	  public final static String EMAIL_SMTP_USER = "armudarya";
-	  public final static String EMAIL_SMTP_PASSWORD = "oystein1234"; // Application-specific password
+	  public final static String EMAIL_SMTP_USER = "SecureAmudarya";
+	  public final static String EMAIL_SMTP_PASSWORD = "Oystein1234"; // Application-specific password
 	  
-	  public final static String EMAIL_FROM_ADDR = "armudarya@gmail.com";
+	  public final static String EMAIL_FROM_ADDR = "SecureAmudarya@gmail.com";
 	  public final static String EMAIL_FROM_NAME = "Amu-Darya";
     
     public final static String SALT="NaCl"; // Changing this will invalidate all customer passwords in DB

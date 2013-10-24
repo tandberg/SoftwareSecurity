@@ -27,7 +27,14 @@
                                 </tr>
                                 <tr>
                                     <td><label for="password">Password</label></td>
-                                    <td><input id="password" name="password" type="text" autocomplete="off" /></td>
+                                    <td><input id="password" name="password" type="text" autocomplete="off" data-toggle="popover" data-content="test"/>
+                                  	</td>
+                                    
+                                </tr>
+                                <tr>
+                                <td></td>
+                                <td><span class="help-block">Password must contain an upper and lower case. It must be 8 characters and contain numbers.</span></td>
+                                </td>
                                 </tr>
                                 <tr>
                                 <td>
