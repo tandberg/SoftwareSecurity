@@ -53,7 +53,7 @@ class RegisterCustomerAction extends HttpServlet implements Action {
                     return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");
             	}
             	if(!InputControl.isValidPassword(request.getParameter("password"))){
-             		ErrorMessage error = new ErrorMessage("Denied", "The length needs to be more than 8. Your password needs to have 3 or more digits and upper/lower case letters");
+             		ErrorMessage error = new ErrorMessage("Denied", "The length of your password needs to be more than 8");
             		request.setAttribute("errorMessage", error);
                     return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");            	
                 }

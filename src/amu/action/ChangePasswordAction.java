@@ -32,7 +32,7 @@ class ChangePasswordAction implements Action {
             request.setAttribute("messages", messages);
             
         	if(!InputControl.isValidPassword(request.getParameterValues("password")[1])){
-         		ErrorMessage error = new ErrorMessage("Denied", "The length needs to be more than 8. Your password needs to have 3 or more digits and upper/lower case letters");
+         		ErrorMessage error = new ErrorMessage("Denied", "The length of your new password needs to be more than 8.");
         		request.setAttribute("errorMessage", error);
                 return new ActionResponse(ActionResponseType.FORWARD, "generalErrorMessage");            	
             }

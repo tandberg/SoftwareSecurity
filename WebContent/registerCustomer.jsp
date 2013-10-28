@@ -33,7 +33,7 @@
                                 </tr>
                                 <tr>
                                 <td></td>
-                                <td><span class="help-block">Password must contain an upper and lower case. It must be 8 characters and contain numbers.</span></td>
+                                <td><span class="help-block">The length of your password needs to be more than 8.</span></td>
                                 </td>
                                 </tr>
                                 <tr>
